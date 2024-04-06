@@ -1,5 +1,6 @@
 numpy
 streamlit
 tensorflow
+opencv-contrib-python-headless
 keras
 streamlit_webrtc
