@@ -26,9 +26,9 @@ except Exception:
 
 RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
 
-class Faceemotion(VideoTransformerBase):
+class Faceemotion:
     def transform(self, picture):
-        img = picture.to_ndarray(format="bgr24")
+        img = picture
 
         #image gray
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -50,45 +50,46 @@ class Faceemotion(VideoTransformerBase):
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        return img,finalout
+        return img,output
 
 def main():
     # Face Analysis Application #
-    st.title("Real Time Face Emotion Detection Application")
+    st.title("Real Time Music Recommendation system using Face Emotion Detection Application")
     activiteis = ["Home", "Webcam Face Detection", "About"]
     choice = st.sidebar.selectbox("Select Activity", activiteis)
     st.sidebar.markdown(
-        """ Developed by Mohammad Juned Khan    
-            Email : Mohammad.juned.z.khan@gmail.com  
-            [LinkedIn] (https://www.linkedin.com/in/md-juned-khan)""")
+        """ Developed by Trishal Reddy    
+            """)
     if choice == "Home":
         html_temp_home1 = """<div style="background-color:#6D7B8D;padding:10px">
                                             <h4 style="color:white;text-align:center;">
-                                            Face Emotion detection application using OpenCV, Custom CNN model and Streamlit.</h4>
+                                            It recommends Music based on facial expressions using OpenCV, Custom CNN model and Streamlit.</h4>
                                             </div>
                                             </br>"""
         st.markdown(html_temp_home1, unsafe_allow_html=True)
         st.write("""
-                 The application has two functionalities.
+                 The application has three functionalities.
 
                  1. Real time face detection using web cam feed.
 
                  2. Real time face emotion recognization.
 
+                 3. Real time Music recommendation 
+
                  """)
     elif choice == "Webcam Face Detection":
         st.header("Webcam Live Feed")
-        st.write("Click on start to use webcam and detect your face emotion")
-        # webrtc_streamer(key="example", mode=WebRtcMode.SENDRECV, rtc_configuration=RTC_CONFIGURATION,
-        #                 video_processor_factory=Faceemotion)
+        st.write("Take a picture and detect your face emotion")
         picture = st.camera_input("Give an Expression")
+        # picture=cv2.imread("image_2.jpg")
         model = Faceemotion()
         img,mood=model.transform(picture)
-        if picture:
+        
+        if picture is not None:
             st.image(img)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
             x=random.randint(1,7)
-            data=open("{}_{}.mp3".format(mood,x),'rb')
+            data=open("songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
             st.audio(data,format='mp3')
 
     elif choice == "About":
@@ -102,7 +103,7 @@ def main():
 
         html_temp4 = """
                              		<div style="background-color:#98AFC7;padding:10px">
-                             		<h4 style="color:white;text-align:center;">This Application is developed by Mohammad Juned Khan using Streamlit Framework, Opencv, Tensorflow and Keras library for demonstration purpose. If you're on LinkedIn and want to connect, just click on the link in sidebar and shoot me a request. If you have any suggestion or wnat to comment just write a mail at Mohammad.juned.z.khan@gmail.com. </h4>
+                             		<h4 style="color:white;text-align:center;">This Application is developed by Trishal Reddy using Streamlit Framework, Opencv, Tensorflow and Keras library for demonstration purpose. If you have any suggestion or wnat to comment just write a mail at trishalreddybokka@gmail.com. </h4>
                              		<h4 style="color:white;text-align:center;">Thanks for Visiting</h4>
                              		</div>
                              		<br></br>
