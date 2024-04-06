@@ -1,0 +1,9 @@
+python
+opencv
+cv2
+numpy
+random
+streamlit
+tensorflow
+keras
+streamlit_webrtc
