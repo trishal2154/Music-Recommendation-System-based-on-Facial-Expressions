@@ -1,4 +1,4 @@
-python
+python-3.11.1
 opencv
 cv2
 numpy
