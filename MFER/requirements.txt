@@ -1,5 +1,4 @@
 numpy
-random
 streamlit
 tensorflow
 keras
