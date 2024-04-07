@@ -1,6 +1,6 @@
 numpy
 streamlit
 tensorflow-cpu
-keras~=2.4.3
+keras
 streamlit_webrtc
 opencv-contrib-python-headless
