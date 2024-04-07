@@ -2,7 +2,6 @@ import numpy as np
 import random
 import cv2
 import streamlit as st
-import keras
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration, VideoProcessorBase, WebRtcMode
