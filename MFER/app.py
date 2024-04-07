@@ -24,8 +24,6 @@ try:
 except Exception:
     st.write("Error loading cascade classifiers")
 
-RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
-
 class Faceemotion:
     def transform(self, picture):
         img = picture
