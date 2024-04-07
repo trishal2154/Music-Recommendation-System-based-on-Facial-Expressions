@@ -6,6 +6,7 @@ import keras
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration, VideoProcessorBase, WebRtcMode
+from PIL import Image
 
 # load model
 emotion_dict = {0:'angry', 1 :'happy', 2: 'neutral', 3:'sad', 4: 'surprise'}
@@ -81,12 +82,11 @@ def main():
         st.header("Webcam Live Feed")
         st.write("Take a picture and detect your face emotion")
         picture = st.camera_input("Give an Expression")
-        # picture=cv2.imread("image_2.jpg")
         model = Faceemotion()
-        img,mood=model.transform(picture)
         
         if picture is not None:
-            st.image(img)
+            pic=Image.open(picture)
+            img,mood=model.transform(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
             x=random.randint(1,7)
             data=open("songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')

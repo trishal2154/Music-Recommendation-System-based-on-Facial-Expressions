@@ -1,6 +1,9 @@
+python
+opencv
+cv2
 numpy
+random
 streamlit
 tensorflow
-opencv-contrib-python-headless
 keras
 streamlit_webrtc
