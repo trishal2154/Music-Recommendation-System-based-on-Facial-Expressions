@@ -7,29 +7,44 @@ from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration, VideoProcessorBase, WebRtcMode
 from PIL import Image
+from keras.models import Sequential
+from keras.layers import InputLayer,Conv2D,MaxPooling2D,Dropout,Flatten,Dense
 
-class CustomLayer(tf.keras.layers.Layer):
-    def __init__(self, k, name=None, **kwargs):
-        super(CustomLayer, self).__init__(name=name)
-        self.k = k
-        super(CustomLayer, self).__init__(**kwargs)
+classifier=Sequential()
 
+classifier.add(InputLayer(input_shape=(48,48,1),dtype="float32",sparse=False,ragged=False,name="conv2d_input"))
+classifier.add(Conv2D(name="conv2d",filters=32,kernel_size=(3,3),activation="relu"))
+classifier.add(Conv2D(name="conv2d_1",filters=64,kernel_size=(3,3),activation="relu"))
+classifier.add(MaxPooling2D(name="max_pooling2d",pool_size=(2,2)))
+classifier.add(Dropout(name="dropout",rate=0.25))
+classifier.add(Conv2D(name="conv2d_2",filters=128,kernel_size=(3,3),activation="relu"))
+classifier.add(MaxPooling2D(name="max_pooling2d_1",pool_size=(2,2)))
+classifier.add(Conv2D(name="conv2d_3",filters=128,kernel_size=(3,3),activation="relu"))
+classifier.add(MaxPooling2D(name="max_pooling2d_2",pool_size=(2,2)))
+classifier.add(Dropout(name="dropout_1",rate=0.25))
+classifier.add(Flatten(name="flatten"))
 
-    def get_config(self):
-        config = super(CustomLayer, self).get_config()
-        config.update({"k": self.k})
-        return config
+classifier.add(Dense(name="dense",units=1024,activation="relu"))
+classifier.add(Dense(name="dense_1",units=720,activation="relu"))
+classifier.add(Dropout(name="dropout_2",rate=0.5))
 
-    def call(self, input):
-        return tf.multiply(input, 2)
+classifier.add(Dense(name="dense_2",units=480,activation="relu"))
+classifier.add(Dropout(name="dropout_3",rate=0.5))
+classifier.add(Dense(name="dense_3",units=240,activation="relu"))
+classifier.add(Dense(name="dense_4",units=5,activation="softmax"))
+
+model_json = classifier.to_json()
+with open("emotion_model.json", "w") as json_file:
+    json_file.write(model_json)
+
 
 # load model
 emotion_dict = {0:'angry', 1 :'happy', 2: 'neutral', 3:'sad', 4: 'surprise'}
 # load json and create model
-json_file = open('MFER/emotion_model1.json', 'r')
+json_file = open('emotion_model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
-classifier = model_from_json(loaded_model_json,custom_objects={'CustomLayer': CustomLayer})
+classifier = model_from_json(loaded_model_json)
 
 # load weights into new model
 classifier.load_weights("MFER/emotion_model1.h5")
