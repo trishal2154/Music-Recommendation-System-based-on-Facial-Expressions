@@ -7,13 +7,28 @@ from keras.preprocessing.image import img_to_array
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration, VideoProcessorBase, WebRtcMode
 from PIL import Image
 
+class CustomLayer(tf.keras.layers.Layer):
+    def __init__(self, k, name=None, **kwargs):
+        super(CustomLayer, self).__init__(name=name)
+        self.k = k
+        super(CustomLayer, self).__init__(**kwargs)
+
+
+    def get_config(self):
+        config = super(CustomLayer, self).get_config()
+        config.update({"k": self.k})
+        return config
+
+    def call(self, input):
+        return tf.multiply(input, 2)
+
 # load model
 emotion_dict = {0:'angry', 1 :'happy', 2: 'neutral', 3:'sad', 4: 'surprise'}
 # load json and create model
 json_file = open('MFER/emotion_model1.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
-classifier = model_from_json(loaded_model_json)
+classifier = model_from_json(loaded_model_json,custom_objects={'CustomLayer': CustomLayer})
 
 # load weights into new model
 classifier.load_weights("MFER/emotion_model1.h5")
