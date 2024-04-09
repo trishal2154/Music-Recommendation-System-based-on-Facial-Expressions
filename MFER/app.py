@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import cv2
-import temserflow as tf
+import tensorflow as tf
 import streamlit as st
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
