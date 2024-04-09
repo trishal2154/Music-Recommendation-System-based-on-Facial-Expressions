@@ -114,8 +114,9 @@ def main():
         
         if picture is not None:
             st.image(picture)
-            pic=cv2.imread(picture)
+            pic=Image.open(picture)
             img,mood=model.transform(pic)
+            st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
             x=random.randint(1,7)
             data=open("songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
