@@ -99,7 +99,7 @@ def main():
         st.write("""
                  The application has three functionalities.
 
-                 1. Real time face detection using web cam feed.
+                 1. Real time face detection using web cam.
 
                  2. Real time face emotion recognization.
 
@@ -107,13 +107,14 @@ def main():
 
                  """)
     elif choice == "Webcam Face Detection":
-        st.header("Webcam Live Feed")
+        st.header("Webcam")
         st.write("Take a picture and detect your face emotion")
         picture = st.camera_input("Give an Expression")
         model = Faceemotion()
         
         if picture is not None:
-            pic=Image.open(picture)
+            st.image(picture)
+            pic=cv2.imread(picture)
             img,mood=model.transform(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
             x=random.randint(1,7)
