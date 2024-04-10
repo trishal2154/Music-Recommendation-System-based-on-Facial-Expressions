@@ -9,6 +9,7 @@ from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfigura
 from PIL import Image
 from keras.models import Sequential
 from keras.layers import InputLayer,Conv2D,MaxPooling2D,Dropout,Flatten,Dense
+import io
 
 classifier=Sequential()
 
@@ -114,7 +115,7 @@ def main():
         
         if picture is not None:
             st.image(picture)
-            pic=Image.open(picture)
+            pic=Image.open(io.BytesIO(picture))
             img,mood=model.transform(pic)
             st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
