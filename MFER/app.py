@@ -111,11 +111,11 @@ def main():
         st.header("Webcam")
         st.write("Take a picture and detect your face emotion")
         picture = st.camera_input("Give an Expression")
-        model = Faceemotion()
         
         if picture is not None:
             st.image(picture)
             pic=np.array(Image.open(picture))
+            model = Faceemotion()
             img,mood=model.transform(pic)
             st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
