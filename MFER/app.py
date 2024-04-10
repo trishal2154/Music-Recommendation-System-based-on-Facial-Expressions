@@ -58,7 +58,7 @@ except Exception:
 
 class Faceemotion:
     def transform(self, picture):
-        img = picture
+        img = picture.to_ndarray(format="bgr24")
 
         #image gray
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -115,7 +115,7 @@ def main():
         
         if picture is not None:
             st.image(picture)
-            pic=np.array(Image.open(picture))
+            pic=Image.open(picture)
             img,mood=model.transform(pic)
             st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
