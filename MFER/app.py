@@ -113,7 +113,6 @@ def main():
         picture = st.camera_input("Give an Expression")
         
         if picture is not None:
-            st.image(picture)
             pic=np.array(Image.open(picture))
             model = Faceemotion()
             img,mood=model.transform(pic)
