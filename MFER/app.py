@@ -120,7 +120,7 @@ def main():
             st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
             x=random.randint(1,7)
-            data=open("songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
+            data=open("MFER/songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
             st.audio(data,format='mp3')
 
     elif choice == "About":
