@@ -115,7 +115,7 @@ def main():
         
         if picture is not None:
             st.image(picture)
-            pic=Image.open(io.BytesIO(picture))
+            pic=Image.open(picture)
             img,mood=model.transform(pic)
             st.image(pic)
             st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
