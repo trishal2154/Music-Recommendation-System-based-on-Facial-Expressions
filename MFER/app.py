@@ -5,7 +5,6 @@ import tensorflow as tf
 import streamlit as st
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration, VideoProcessorBase, WebRtcMode
 from PIL import Image
 from keras.models import Sequential
 from keras.layers import InputLayer,Conv2D,MaxPooling2D,Dropout,Flatten,Dense
