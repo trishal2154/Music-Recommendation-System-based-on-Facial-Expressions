@@ -74,7 +74,10 @@ class Faceemotion:
                 roi = np.expand_dims(roi, axis=0)
                 prediction = classifier.predict(roi)[0]
                 maxindex = int(np.argmax(prediction))
-                finalout = emotion_dict[maxindex]
+                if maxindex in emotion_dict:
+                    finalout = emotion_dict[maxindex]
+                else:
+                    finalout = "x"
                 output = str(finalout)
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
@@ -115,11 +118,14 @@ def main():
             pic=np.array(Image.open(picture))
             model = Faceemotion()
             img,mood=model.transform(pic)
-            st.image(pic)
-            st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
-            x=random.randint(1,7)
-            data=open("MFER/songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
-            st.audio(data,format='mp3')
+            if mood=="x":
+                st.write("Sorry, we can't able to detect your face. Please try once again")
+            else:
+                st.image(pic)
+                st.write(f"# Your probably in {mood} mood. So, let me recommend you some music")
+                x=random.randint(1,7)
+                data=open("MFER/songs/{}/{}_{}.mp3".format(mood,mood,x),'rb')
+                st.audio(data,format='mp3')
 
     elif choice == "About":
         st.subheader("About this app")
