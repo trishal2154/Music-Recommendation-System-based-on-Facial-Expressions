@@ -63,6 +63,8 @@ class Faceemotion:
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             image=img_gray, scaleFactor=1.3, minNeighbors=5)
+        if faces is Null:
+            return img,"x"
         for (x, y, w, h) in faces:
             cv2.rectangle(img=img, pt1=(x, y), pt2=(
                 x + w, y + h), color=(255, 0, 0), thickness=2)
@@ -81,8 +83,7 @@ class Faceemotion:
                 output = str(finalout)
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        if mood is Null:
-            return img,"x"
+    
         return img,output
 
 def main():
