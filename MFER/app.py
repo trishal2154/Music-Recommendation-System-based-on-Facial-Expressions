@@ -63,7 +63,7 @@ class Faceemotion:
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             image=img_gray, scaleFactor=1.3, minNeighbors=5)
-        if faces is Null:
+        if not faces:
             return img,"x"
         for (x, y, w, h) in faces:
             cv2.rectangle(img=img, pt1=(x, y), pt2=(
