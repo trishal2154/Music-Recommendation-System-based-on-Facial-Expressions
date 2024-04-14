@@ -81,7 +81,8 @@ class Faceemotion:
                 output = str(finalout)
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
+        if mood is Null:
+            return img,"x"
         return img,output
 
 def main():
