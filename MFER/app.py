@@ -83,7 +83,7 @@ class Faceemotion:
                     finalout = emotion_dict[maxindex]
                 else:
                     finalout = "x"
-                output = append(str(finalout))
+                output.append(str(finalout))
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
