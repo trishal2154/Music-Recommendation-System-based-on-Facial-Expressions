@@ -9,7 +9,6 @@ from PIL import Image
 from keras.models import Sequential
 from keras.layers import InputLayer,Conv2D,MaxPooling2D,Dropout,Flatten,Dense
 import io
-from statistics import mode
 
 classifier=Sequential()
 
@@ -60,8 +59,6 @@ class Faceemotion:
     def transform(self, picture):
         img = picture
 
-        output=[]
-
         #image gray
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
@@ -83,7 +80,7 @@ class Faceemotion:
                     finalout = emotion_dict[maxindex]
                 else:
                     finalout = "x"
-                output.append(str(finalout))
+                output = str(finalout)
             label_position = (x, y)
             cv2.putText(img, output, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
@@ -123,7 +120,6 @@ def main():
             pic=np.array(Image.open(picture))
             model = Faceemotion()
             img,mood=model.transform(pic)
-            mood=mode(mood)
             if mood=="x":
                 st.write("Sorry, we can't able to detect your face. Please try once again")
             else:
